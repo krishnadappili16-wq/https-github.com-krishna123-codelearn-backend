@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLearn - Learn Programming</title>
+    <style>
+        /* ===== CSS STYLING ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .hero .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero button {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .hero button:hover {
+            background-color: #764ba2;
+            transform: scale(1.05);
+        }
+
+        /* Course Cards */
+        .courses-section {
+            margin: 40px 0;
+        }
+
+        .courses-section h2 {
+            text-align: center;
+            color: white;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .course-card h3 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .course-card p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .course-card .difficulty {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .course-card button {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .course-card button:hover {
+            background-color: #764ba2;
+        }
+
+        /* Practice Section */
+        .practice-section {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 40px 0;
+            display: none;
+        }
+
+        .practice-section.active {
+            display: block;
+        }
+
+        .practice-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .language-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .code-editor {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .run-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .run-button:hover {
+            background-color: #218838;
+        }
+
+        .output {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            min-height: 100px;
+            white-space: pre-wrap;
+            border: 2px solid #ddd;
+        }
+
+        /* Hidden Sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            textarea {
+                height: 200px;
+            }
+
+            .language-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <div class="logo">💻 CodeLearn</div>
+        <ul>
+            <li><a onclick="showSection('home')">Home</a></li>
+            <li><a onclick="showSection('courses')">Courses</a></li>
+            <li><a onclick="showSection('practice')">Practice</a></li>
+            <li><a onclick="showSection('about')">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- HOME SECTION -->
+        <div id="home" class="section active">
+            <div class="hero">
+                <h1>🚀 Welcome to CodeLearn</h1>
+                <p>Learn 8 Programming Languages & Data Structures</p>
+                <p class="subtitle">Master: Python, Java, C, C++, JavaScript, Node.js, Data Structures & Advanced Data Structures</p>
+                <button onclick="showSection('courses')">Start Learning</button>
+            </div>
+        </div>
+
+        <!-- COURSES SECTION -->
+        <div id="courses" class="section">
+            <div class="courses-section">
+                <h2>📚 Choose Your Course (8 Courses Available)</h2>
+                <div class="courses-grid">
+                    <!-- Python Course -->
+                    <div class="course-card">
+                        <h3>🐍 Python</h3>
+                        <p>Learn Python basics with easy syntax. Perfect for beginners, data science, and automation.</p>
+                        <div class="difficulty">Beginner</div>
+                        <button onclick="alert('🐍 Python Course Coming Soon!')">Start Python</button>
+                    </div>
+
+                    <!-- Java Course -->
+                    <div class="course-card">
+                        <h3>☕ Java</h3>
+                        <p>Master object-oriented programming. Essential for enterprise applications and Android development.</p>
+                        <div class="difficulty">Intermediate</div>
+                        <button onclick="alert('☕ Java Course Coming Soon!')">Start Java</button>
+                    </div>
+
+                    <!-- C Course -->
+                    <div class="course-card">
+                        <h3>🔤 C Programming</h3>
+                        <p>Learn low-level programming fundamentals. Perfect for understanding how computers work.</p>
+                        <div class="difficulty">Intermediate</div>
+                        <button onclick="alert('🔤 C Course Coming Soon!')">Start C</button>
+                    </div>
+
+                    <!-- C++ Course -->
+                    <div class="course-card">
+                        <h3>➕ C++</h3>
+                        <p>Advanced C with OOP features. High-performance language for competitive programming.</p>
+                        <div class="difficulty">Advanced</div>
+                        <button onclick="alert('➕ C++ Course Coming Soon!')">Start C++</button>
+                    </div>
+
+                    <!-- JavaScript Course -->
+                    <div class="course-card">
+                        <h3>⚡ JavaScript</h3>
+                        <p>Build interactive web applications. Essential for frontend and modern web development.</p>
+                        <div class="difficulty">Beginner</div>
+                        <button onclick="alert('⚡ JavaScript Course Coming Soon!')">Start JavaScript</button>
+                    </div>
+
+                    <!-- Node.js Course -->
+                    <div class="course-card">
+                        <h3>🟢 Node.js</h3>
+                        <p>Server-side JavaScript development. Learn backend and build scalable applications.</p>
+                        <div class="difficulty">Intermediate</div>
+                        <button onclick="alert('🟢 Node.js Course Coming Soon!')">Start Node.js</button>
+                    </div>
+
+                    <!-- Data Structures Course -->
+                    <div class="course-card">
+                        <h3>📊 Data Structures</h3>
+                        <p>Master arrays, stacks, queues, linked lists, trees. Essential for coding interviews.</p>
+                        <div class="difficulty">Intermediate</div>
+                        <button onclick="alert('📊 Data Structures Course Coming Soon!')">Start DS</button>
+                    </div>
+
+                    <!-- Advanced Data Structures Course -->
+                    <div class="course-card">
+                        <h3>🏗️ Advanced Data Structures</h3>
+                        <p>Learn segment trees, Fenwick trees, DSU, hash tables. For competitive programming.</p>
+                        <div class="difficulty">Advanced</div>
+                        <button onclick="alert('🏗️ Advanced Data Structures Course Coming Soon!')">Start ADS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRACTICE SECTION -->
+        <div id="practice" class="section">
+            <div class="practice-section active">
+                <h2>💻 Practice Coding</h2>
+                
+                <!-- Language Tabs - Now with all 8 languages -->
+                <div class="language-tabs">
+                    <button class="tab-button active" onclick="switchLanguage('python')">🐍 Python</button>
+                    <button class="tab-button" onclick="switchLanguage('javascript')">⚡ JavaScript</button>
+                    <button class="tab-button" onclick="switchLanguage('java')">☕ Java</button>
+                    <button class="tab-button" onclick="switchLanguage('c')">🔤 C</button>
+                    <button class="tab-button" onclick="switchLanguage('cpp')">➕ C++</button>
+                    <button class="tab-button" onclick="switchLanguage('nodejs')">🟢 Node.js</button>
+                    <button class="tab-button" onclick="switchLanguage('ds')">📊 DS</button>
+                    <button class="tab-button" onclick="switchLanguage('ads')">🏗️ ADS</button>
+                </div>
+
+                <!-- Code Editor -->
+                <div class="code-editor">
+                    <textarea id="codeInput" placeholder="Write your code here...">print("Hello, World!")</textarea>
+                </div>
+
+                <!-- Run Button -->
+                <button class="run-button" onclick="runCode()">▶ Run Code</button>
+
+                <!-- Output -->
+                <div class="output" id="output">Output will appear here...</div>
+            </div>
+        </div>
+
+        <!-- ABOUT SECTION -->
+        <div id="about" class="section">
+            <div style="background: white; padding: 40px; border-radius: 10px; text-align: center;">
+                <h2 style="color: #667eea; margin-bottom: 20px;">About CodeLearn</h2>
+                <p style="font-size: 18px; line-height: 1.8; color: #666;">
+                    CodeLearn is your complete platform to learn 8 programming languages and data structures. 
+                    We provide structured courses, interactive practice exercises, and code execution. 
+                    <br><br>
+                    <strong>8 Complete Courses:</strong>
+                    <br>🐍 Python | ☕ Java | 🔤 C | ➕ C++ | ⚡ JavaScript | 🟢 Node.js | 📊 Data Structures | 🏗️ Advanced Data Structures
+                    <br><br>
+                    Start your coding journey today and become a proficient programmer!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 CodeLearn. All rights reserved. | Learn. Practice. Master. 8 Languages & DS</p>
+    </footer>
+
+    <!-- JAVASCRIPT CODE -->
+    <script>
+        // ===== JAVASCRIPT FUNCTIONALITY =====
+
+        // Function to show different sections
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+        }
+
+        // Function to switch programming language in practice (NOW WITH 8 LANGUAGES)
+        function switchLanguage(language) {
+            const codeInput = document.getElementById('codeInput');
+            const tabButtons = document.querySelectorAll('.tab-button');
+
+            // Remove active class from all buttons
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Set default code based on language (8 LANGUAGES)
+            const defaultCode = {
+                python: 'print("Hello, World!")\n\n# Python is easy to learn!\nfor i in range(5):\n    print(f"Count: {i}")',
+                
+                javascript: 'console.log("Hello, World!");\n\n// JavaScript for web development\nlet arr = [1, 2, 3, 4, 5];\narr.forEach(num => console.log(num));',
+                
+                java: 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n    // Object-oriented programming\n    for(int i = 0; i < 5; i++) {\n      System.out.println("Count: " + i);\n    }\n  }\n}',
+                
+                c: '#include <stdio.h>\nint main() {\n  printf("Hello, World!\\n");\n  // Low-level programming\n  for(int i = 0; i < 5; i++) {\n    printf("Count: %d\\n", i);\n  }\n  return 0;\n}',
+                
+                cpp: '#include <iostream>\nusing namespace std;\nint main() {\n  cout << "Hello, World!" << endl;\n  // C++ with OOP\n  vector<int> arr = {1, 2, 3, 4, 5};\n  for(int x : arr)\n    cout << x << " ";\n  return 0;\n}',
+                
+                nodejs: 'console.log("Hello, World!");\n\n// Node.js - Server-side JavaScript\nconst express = require("express");\nconst app = express();\napp.listen(3000, () => console.log("Server running"));',
+                
+                ds: '// Data Structures - Stack Example\nclass Stack {\n  constructor() {\n    this.items = [];\n  }\n  push(element) {\n    this.items.push(element);\n  }\n  pop() {\n    return this.items.pop();\n  }\n}\n\nlet stack = new Stack();\nstack.push(1);\nstack.push(2);',
+                
+                ads: '// Advanced Data Structures - Segment Tree Example\nclass SegmentTree {\n  constructor(arr) {\n    this.tree = new Array(4 * arr.length);\n    this.build(arr, 0, 0, arr.length - 1);\n  }\n  build(arr, node, start, end) {\n    if(start === end) {\n      this.tree[node] = arr[start];\n    }\n    // Build tree recursively\n  }\n}'
+            };
+
+            codeInput.value = defaultCode[language];
+        }
+
+        // Function to run code (simulated)
+        function runCode() {
+            const code = document.getElementById('codeInput').value;
+            const output = document.getElementById('output');
+
+            if (!code.trim()) {
+                output.textContent = '❌ Error: Please write some code first!';
+                return;
+            }
+
+            // For now, show a message (actual execution needs a backend)
+            output.textContent = '✅ Code submitted successfully!\n\n📌 Backend execution coming soon.\n\n📝 Your code:\n' + code + '\n\n💡 Write your solution and click "Run Code"';
+        }
+
+        // Initialize
+        console.log('✅ CodeLearn App Loaded Successfully! ✅');
+        console.log('📚 Available Languages: Python, Java, C, C++, JavaScript, Node.js, Data Structures, Advanced Data Structures');
+    </script>
+
+</body>
+</html>
